@@ -8,9 +8,9 @@
 
 <br/><br/>
 
-[![Awesome](https://awesome.re/badge.svg)](https://github.com/juzerjawadi-web/invoice-generator)
+[![Awesome](https://awesome.re/badge.svg)](https://github.com/juzerjawadi-web/noirlabs-studio-web)
 [![Noir Labs](https://img.shields.io/badge/Noir%20Labs-Studio-0070f3?style=flat-square&logo=vercel&logoColor=white)](https://noirlabs-invoice.vercel.app)
-[![If Useful](https://img.shields.io/badge/%E2%98%85%20If%20Useful-Star%20Repo-d946ef?style=flat-square)](https://github.com/juzerjawadi-web/invoice-generator)
+[![If Useful](https://img.shields.io/badge/%E2%98%85%20If%20Useful-Star%20Repo-d946ef?style=flat-square)](https://github.com/juzerjawadi-web/noirlabs-studio-web)
 [![Status](https://img.shields.io/badge/Status-Production--Ready-6366f1?style=flat-square&logo=statuspage&logoColor=white)](https://noirlabs-invoice.vercel.app)
 [![Follow @juzer09jawadwala](https://img.shields.io/badge/Follow-%40juzer09jawadwala-black?style=flat-square&logo=github&logoColor=white)](https://github.com/juzerjawadi-web)
 
@@ -20,11 +20,11 @@
 
 <br/>
 
-[![Stars](https://img.shields.io/github/stars/juzerjawadi-web/invoice-generator?style=flat-square&logo=github&color=black)](https://github.com/juzerjawadi-web/invoice-generator/stargazers)
-[![Forks](https://img.shields.io/github/forks/juzerjawadi-web/invoice-generator?style=flat-square&logo=github&color=black)](https://github.com/juzerjawadi-web/invoice-generator/network/members)
-[![Pull Requests](https://img.shields.io/github/issues-pr/juzerjawadi-web/invoice-generator?style=flat-square&color=eab308)](https://github.com/juzerjawadi-web/invoice-generator/pulls)
-[![Issues](https://img.shields.io/github/issues/juzerjawadi-web/invoice-generator?style=flat-square&color=eab308)](https://github.com/juzerjawadi-web/invoice-generator/issues)
-[![Contributors](https://img.shields.io/github/contributors/juzerjawadi-web/invoice-generator?style=flat-square&color=22c55e)](https://github.com/juzerjawadi-web/invoice-generator/graphs/contributors)
+[![Stars](https://img.shields.io/github/stars/juzerjawadi-web/noirlabs-studio-web?style=flat-square&logo=github&color=black)](https://github.com/juzerjawadi-web/noirlabs-studio-web/stargazers)
+[![Forks](https://img.shields.io/github/forks/juzerjawadi-web/noirlabs-studio-web?style=flat-square&logo=github&color=black)](https://github.com/juzerjawadi-web/noirlabs-studio-web/network/members)
+[![Pull Requests](https://img.shields.io/github/issues-pr/juzerjawadi-web/noirlabs-studio-web?style=flat-square&color=eab308)](https://github.com/juzerjawadi-web/noirlabs-studio-web/pulls)
+[![Issues](https://img.shields.io/github/issues/juzerjawadi-web/noirlabs-studio-web?style=flat-square&color=eab308)](https://github.com/juzerjawadi-web/noirlabs-studio-web/issues)
+[![Contributors](https://img.shields.io/github/contributors/juzerjawadi-web/noirlabs-studio-web?style=flat-square&color=22c55e)](https://github.com/juzerjawadi-web/noirlabs-studio-web/graphs/contributors)
 [![License](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)](LICENSE)
 
 <br/>
@@ -83,7 +83,7 @@ Unlike traditional bland invoicing tools, NoirInvoice merges **obsidian dark-mod
 | Environment | URL | Status |
 | :--- | :--- | :--- |
 | **Production App** | [https://noirlabs-invoice.vercel.app](https://noirlabs-invoice.vercel.app) | ![Production Ready](https://img.shields.io/badge/Status-Live%20Online-22c55e?style=flat-square) |
-| **GitHub Repository** | [https://github.com/juzerjawadi-web/invoice-generator](https://github.com/juzerjawadi-web/invoice-generator) | ![Open Source](https://img.shields.io/badge/GitHub-Public-blue?style=flat-square&logo=github) |
+| **GitHub Repository** | [https://github.com/juzerjawadi-web/noirlabs-studio-web](https://github.com/juzerjawadi-web/noirlabs-studio-web) | ![Open Source](https://img.shields.io/badge/GitHub-Public-blue?style=flat-square&logo=github) |
 
 ---
 
@@ -196,7 +196,7 @@ export const GOOGLE_CLIENT_ID =
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/juzerjawadi-web/invoice-generator.git
+git clone https://github.com/juzerjawadi-web/noirlabs-studio-web.git
 cd invoice-generator-
 ```
 
