@@ -201,7 +201,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, Props>(({ invoice }, re
               Scan to Pay
             </div>
             <img 
-              src="/qr-code.jpeg" 
+              src={`${import.meta.env.BASE_URL}qr-code.jpeg`} 
               alt="Payment QR Code" 
               onClick={() => setIsQrExpanded(true)}
               style={{ width: '120px', height: '120px', borderRadius: '8px', objectFit: 'cover', border: '1px solid var(--color-light-gray)', cursor: 'zoom-in', transition: 'transform 0.2s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} 
@@ -355,7 +355,7 @@ export const InvoicePreview = forwardRef<HTMLDivElement, Props>(({ invoice }, re
             <div style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-graphite)', fontWeight: 700, marginBottom: '16px', textAlign: 'center' }}>
               Scan to Pay
             </div>
-            <img src="/qr-code.jpeg" alt="Payment QR Code" style={{ width: '300px', height: '300px', borderRadius: '12px', objectFit: 'cover' }} />
+            <img src={`${import.meta.env.BASE_URL}qr-code.jpeg`} alt="Payment QR Code" style={{ width: '300px', height: '300px', borderRadius: '12px', objectFit: 'cover' }} />
           </div>
         </div>
       )}
