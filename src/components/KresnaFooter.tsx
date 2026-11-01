@@ -7,6 +7,28 @@ export function KresnaFooter() {
   const [activePage, setActivePage] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const textRef = useRef<SVGTextElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     function fitWatermark() {
@@ -493,12 +515,12 @@ export function KresnaFooter() {
           {/* Left Card (Video Background) */}
           <div className="kresna-footer-left">
             <video
+              ref={videoRef}
               className="kresna-footer-left-video"
-              autoPlay
               muted
               loop
               playsInline
-              preload="auto"
+              preload="none"
             >
               <source
                 src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_104800_bc43ae09-f494-43e3-97d7-2f8c1692cfd7.mp4"

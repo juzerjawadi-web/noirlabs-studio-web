@@ -6,16 +6,23 @@ import { useServices } from './hooks/useServices';
 import { useSettings } from './hooks/useSettings';
 import { AppShell, AppView } from './components/AppShell';
 import { Dashboard } from './components/Dashboard';
-import { InvoicesList } from './components/InvoicesList';
-import { ClientsView } from './components/ClientsView';
-import { ServicesView } from './components/ServicesView';
-import { SettingsView } from './components/SettingsView';
-import { Editor } from './components/Editor';
 import { ToastProvider, useToast } from './components/Toast';
 import { CurrencyCode, Invoice } from './types';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './context/AuthContext';
 import { GOOGLE_CLIENT_ID } from './config/auth';
+
+const InvoicesList = React.lazy(() => import('./components/InvoicesList').then(m => ({ default: m.InvoicesList })));
+const ClientsView = React.lazy(() => import('./components/ClientsView').then(m => ({ default: m.ClientsView })));
+const ServicesView = React.lazy(() => import('./components/ServicesView').then(m => ({ default: m.ServicesView })));
+const SettingsView = React.lazy(() => import('./components/SettingsView').then(m => ({ default: m.SettingsView })));
+const Editor = React.lazy(() => import('./components/Editor').then(m => ({ default: m.Editor })));
+
+const ViewLoader = () => (
+  <div className="w-full min-h-[400px] flex items-center justify-center">
+    <div className="w-8 h-8 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+  </div>
+);
 
 function MainAppContent() {
   const [currentView, setCurrentView] = useState<AppView>('dashboard');
@@ -154,15 +161,17 @@ function MainAppContent() {
   // If currently editing an invoice, show full-screen Editor
   if (currentInvoice) {
     return (
-      <Editor
-        invoice={currentInvoice}
-        clients={clients}
-        services={services}
-        onUpdate={updateCurrent}
-        onSave={handleSaveInvoice}
-        onClose={() => setCurrentInvoice(null)}
-        onAddClient={addClient}
-      />
+      <React.Suspense fallback={<ViewLoader />}>
+        <Editor
+          invoice={currentInvoice}
+          clients={clients}
+          services={services}
+          onUpdate={updateCurrent}
+          onSave={handleSaveInvoice}
+          onClose={() => setCurrentInvoice(null)}
+          onAddClient={addClient}
+        />
+      </React.Suspense>
     );
   }
 
@@ -183,58 +192,60 @@ function MainAppContent() {
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           style={{ willChange: 'transform, opacity' }}
         >
-          {currentView === 'dashboard' && (
-            <Dashboard
-              invoices={invoices}
-              currency={currency}
-              onCreateNew={() => handleCreateNewInvoice()}
-              onLoad={loadInvoice}
-              onDelete={deleteInvoice}
-              onDuplicate={duplicateInvoice}
-              onNavigate={(view) => setCurrentView(view)}
-            />
-          )}
+          <React.Suspense fallback={<ViewLoader />}>
+            {currentView === 'dashboard' && (
+              <Dashboard
+                invoices={invoices}
+                currency={currency}
+                onCreateNew={() => handleCreateNewInvoice()}
+                onLoad={loadInvoice}
+                onDelete={deleteInvoice}
+                onDuplicate={duplicateInvoice}
+                onNavigate={(view) => setCurrentView(view)}
+              />
+            )}
 
-          {currentView === 'invoices' && (
-            <InvoicesList
-              invoices={invoices}
-              currency={currency}
-              onCreateNew={() => handleCreateNewInvoice()}
-              onLoad={loadInvoice}
-              onDelete={deleteInvoice}
-              onDuplicate={duplicateInvoice}
-            />
-          )}
+            {currentView === 'invoices' && (
+              <InvoicesList
+                invoices={invoices}
+                currency={currency}
+                onCreateNew={() => handleCreateNewInvoice()}
+                onLoad={loadInvoice}
+                onDelete={deleteInvoice}
+                onDuplicate={duplicateInvoice}
+              />
+            )}
 
-          {currentView === 'clients' && (
-            <ClientsView
-              clients={clients}
-              invoices={invoices}
-              currency={currency}
-              onAddClient={addClient}
-              onUpdateClient={updateClient}
-              onDeleteClient={deleteClient}
-              onCreateInvoiceForClient={(clientId) => handleCreateNewInvoice(clientId)}
-            />
-          )}
+            {currentView === 'clients' && (
+              <ClientsView
+                clients={clients}
+                invoices={invoices}
+                currency={currency}
+                onAddClient={addClient}
+                onUpdateClient={updateClient}
+                onDeleteClient={deleteClient}
+                onCreateInvoiceForClient={(clientId) => handleCreateNewInvoice(clientId)}
+              />
+            )}
 
-          {currentView === 'services' && (
-            <ServicesView
-              services={services}
-              currency={currency}
-              onAddService={addService}
-              onUpdateService={updateService}
-              onDeleteService={deleteService}
-              onResetDefaults={resetToDefaults}
-            />
-          )}
+            {currentView === 'services' && (
+              <ServicesView
+                services={services}
+                currency={currency}
+                onAddService={addService}
+                onUpdateService={updateService}
+                onDeleteService={deleteService}
+                onResetDefaults={resetToDefaults}
+              />
+            )}
 
-          {currentView === 'settings' && (
-            <SettingsView
-              settings={settings}
-              onUpdateSettings={updateSettings}
-            />
-          )}
+            {currentView === 'settings' && (
+              <SettingsView
+                settings={settings}
+                onUpdateSettings={updateSettings}
+              />
+            )}
+          </React.Suspense>
         </motion.div>
       </AnimatePresence>
     </AppShell>

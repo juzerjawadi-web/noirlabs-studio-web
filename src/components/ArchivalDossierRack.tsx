@@ -638,8 +638,10 @@ export function ArchivalDossierRack({
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] lg:aspect-[2752/1200] overflow-hidden bg-black select-none">
             {/* Base Image with Floating 3D and Transparency */}
             <img
-              src="/in.jpg"
+              src={`${import.meta.env.BASE_URL}in.jpg`}
               alt="Noir Archival Folders Dossier"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover object-center filter contrast-[1.03] brightness-[0.98] transition-all duration-300 animate-float drop-shadow-2xl"
               style={{
                 WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
@@ -808,7 +810,7 @@ export function ArchivalDossierRack({
                 <div
                   className="absolute inset-0 opacity-25 group-hover:opacity-40 transition-opacity bg-cover"
                   style={{
-                    backgroundImage: 'url(/in.jpg)',
+                    backgroundImage: `url(${import.meta.env.BASE_URL}in.jpg)`,
                     backgroundPosition: `${folder.centerPct}% center`,
                     backgroundSize: '1000% 100%',
                   }}
@@ -941,7 +943,7 @@ export function ArchivalDossierRack({
                     <div
                       className="w-full h-full bg-cover transition-transform duration-500 group-hover:scale-105"
                       style={{
-                        backgroundImage: 'url(/in.jpg)',
+                        backgroundImage: `url(${import.meta.env.BASE_URL}in.jpg)`,
                         backgroundPosition: `${selectedFolder.centerPct}% center`,
                         backgroundSize: '1000% 100%',
                       }}

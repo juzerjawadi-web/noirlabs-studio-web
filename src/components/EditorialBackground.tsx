@@ -16,8 +16,11 @@ export function EditorialBackground() {
 
       {/* Monochrome Dotted Wave Field Background */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40"
-        style={{ backgroundImage: 'url(/bg-wave.png)' }}
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40 pointer-events-none"
+        style={{ 
+          backgroundImage: `url(${import.meta.env.BASE_URL}bg-wave.png)`,
+          transform: 'translateZ(0)',
+        }}
       />
     </div>
   );

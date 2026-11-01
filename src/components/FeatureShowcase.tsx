@@ -20,7 +20,7 @@ const FEATURES: FeatureSection[] = [
     title: 'Architectural Blueprint Layouts',
     subtitle: 'Dynamic rendering engine for invoices',
     description: 'Transform mundane billing into striking editorial pieces. Our engine uses dynamic geometric grids and Noir-inspired aesthetics to instantly structure your line items into beautifully legible, high-contrast documents.',
-    imageSrc: '/new-sec/1.jpg',
+    imageSrc: `${import.meta.env.BASE_URL}new-sec/1.jpg`,
     icon: <Box className="w-5 h-5" />,
     accentColor: 'var(--color-off-white)', // Orange
   },
@@ -30,7 +30,7 @@ const FEATURES: FeatureSection[] = [
     title: 'Cryptographic Settlement',
     subtitle: 'Secure payment routing & API pipelines',
     description: 'Bypass traditional gateways with direct cryptographic payment pipelines. Generate instant UPI QR codes mapped specifically to each invoice, resulting in zero-fee, instant bank-to-bank settlements.',
-    imageSrc: '/new-sec/2.jpg',
+    imageSrc: `${import.meta.env.BASE_URL}new-sec/2.jpg`,
     icon: <Lock className="w-5 h-5" />,
     accentColor: 'var(--color-light-gray)', // Blue
   },
@@ -40,7 +40,7 @@ const FEATURES: FeatureSection[] = [
     title: 'Real-time Drift Detection',
     subtitle: 'Variance & currency fluctuation monitoring',
     description: 'Stay ahead of international currency changes and tax variances. The system automatically recalculates cross-border rates and tax jurisdictions in real-time, displaying drift metrics on your dashboard.',
-    imageSrc: '/new-sec/3.jpg',
+    imageSrc: `${import.meta.env.BASE_URL}new-sec/3.jpg`,
     icon: <Zap className="w-5 h-5" />,
     accentColor: 'var(--color-light-gray)', // Green
   },
@@ -50,7 +50,7 @@ const FEATURES: FeatureSection[] = [
     title: 'Immutable Ledger Vault',
     subtitle: 'Offline backup & compliance preservation',
     description: 'Every generated docket is cryptographically sealed and archived in our immutable ledger. Access past invoices, track revisions, and maintain complete tax compliance with our robust archival system.',
-    imageSrc: '/new-sec/4.jpg',
+    imageSrc: `${import.meta.env.BASE_URL}new-sec/4.jpg`,
     icon: <Shield className="w-5 h-5" />,
     accentColor: 'var(--color-light-gray)', // Amber
   },
@@ -155,6 +155,8 @@ export function FeatureShowcase() {
                       <img 
                         src={feature.imageSrc} 
                         alt={feature.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-2xl filter brightness-[0.85] contrast-125 group-hover:brightness-100 group-hover:scale-105 transition-all duration-700 ease-out"
                         style={{
                           WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)',
@@ -214,6 +216,7 @@ export function FeatureShowcase() {
                 <img 
                   src={selectedImage.imageSrc} 
                   alt={selectedImage.title}
+                  decoding="async"
                   className="max-w-full max-h-full object-contain rounded-xl drop-shadow-[0_20px_50px_rgba(255,255,255,0.05)]"
                   style={{
                     WebkitMaskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)',

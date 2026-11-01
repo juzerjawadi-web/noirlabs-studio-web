@@ -16,27 +16,33 @@ export function StackedSection({ children, index, isLast = false }: StackedSecti
   const [scrollOffset, setScrollOffset] = useState<["end bottom" | "start start", "end top"]>(["start start", "end top"]);
 
   useEffect(() => {
+    let rafId: number | null = null;
+
     const updateOffset = () => {
-      if (sectionRef.current) {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        if (!sectionRef.current) return;
         const h = sectionRef.current.offsetHeight;
         const wh = window.innerHeight;
-        if (h > wh) {
-          setTopOffset(wh - h);
-          setScrollOffset(["end bottom", "end top"]);
-        } else {
-          setTopOffset(0);
-          setScrollOffset(["start start", "end top"]);
-        }
-      }
+        const targetTop = h > wh ? wh - h : 0;
+        setTopOffset((prev) => (prev !== targetTop ? targetTop : prev));
+        const newOffset: ["end bottom" | "start start", "end top"] =
+          h > wh ? ["end bottom", "end top"] : ["start start", "end top"];
+        setScrollOffset((prev) =>
+          prev[0] !== newOffset[0] || prev[1] !== newOffset[1] ? newOffset : prev
+        );
+      });
     };
-    
+
     updateOffset();
     const observer = new ResizeObserver(updateOffset);
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
-    window.addEventListener('resize', updateOffset);
+    window.addEventListener('resize', updateOffset, { passive: true });
     return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
       observer.disconnect();
       window.removeEventListener('resize', updateOffset);
     };
@@ -59,8 +65,6 @@ export function StackedSection({ children, index, isLast = false }: StackedSecti
         position: 'sticky',
         top: topOffset,
         zIndex: index,
-        // Optional minor performance optimization hints
-        willChange: "transform"
       }}
     >
       <motion.div

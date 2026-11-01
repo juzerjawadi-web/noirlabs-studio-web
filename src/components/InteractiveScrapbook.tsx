@@ -210,8 +210,10 @@ export function InteractiveScrapbook() {
           
           {/* Base Image with Floating 3D and Transparency */}
           <img 
-            src="/fl.jpg" 
+            src={`${import.meta.env.BASE_URL}fl.jpg`} 
             alt="Multimedia Portfolio Scrapbook" 
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover rounded-xl sm:rounded-3xl"
             style={{
               WebkitMaskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)',

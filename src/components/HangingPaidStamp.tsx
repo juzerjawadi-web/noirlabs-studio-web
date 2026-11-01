@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 
 interface HangingPaidStampProps {
   className?: string;
@@ -7,10 +7,13 @@ interface HangingPaidStampProps {
 }
 
 export function HangingPaidStamp({ className = '', style }: HangingPaidStampProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '150px' });
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
+      ref={containerRef}
       className={`relative select-none pointer-events-auto flex flex-col items-center ${className}`}
       style={style}
       onMouseEnter={() => setIsHovered(true)}
@@ -38,7 +41,8 @@ export function HangingPaidStamp({ className = '', style }: HangingPaidStampProp
                 rotate: [-6, 6, -4, 4, -2, 2, 0],
                 transition: { duration: 1.4, ease: 'easeOut' },
               }
-            : {
+            : isInView
+            ? {
                 rotate: [-3, 3, -3],
                 transition: {
                   duration: 4.2,
@@ -46,6 +50,7 @@ export function HangingPaidStamp({ className = '', style }: HangingPaidStampProp
                   ease: 'easeInOut',
                 },
               }
+            : { rotate: 0 }
         }
       >
         {/* Braided Hanging Rope (SVG with realistic twist texture) */}
@@ -121,7 +126,7 @@ export function HangingPaidStamp({ className = '', style }: HangingPaidStampProp
           <model-viewer
             src={`${import.meta.env.BASE_URL}paid-stamp.glb`}
             alt="Paid Stamp 3D Model"
-            auto-rotate
+            auto-rotate={isInView ? true : undefined}
             rotation-per-second="24deg"
             camera-controls
             disable-zoom
@@ -130,7 +135,7 @@ export function HangingPaidStamp({ className = '', style }: HangingPaidStampProp
             shadow-intensity="1.6"
             shadow-softness="0.75"
             exposure="1.2"
-            loading="eager"
+            loading="lazy"
             reveal="auto"
             style={{
               width: '100%',
@@ -144,11 +149,21 @@ export function HangingPaidStamp({ className = '', style }: HangingPaidStampProp
           {/* Subtle swinging drop-shadow below the stamp */}
           <motion.div
             className="absolute -bottom-1 w-12 h-2 rounded-full bg-black/60 blur-xs pointer-events-none"
-            animate={{
-              scale: isHovered ? [1, 1.15, 1] : [1, 0.9, 1],
-              opacity: isHovered ? 0.7 : 0.45,
-            }}
-            transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+            animate={
+              isHovered
+                ? { scale: [1, 1.15, 1], opacity: 0.7 }
+                : isInView
+                ? {
+                    scale: [1, 0.9, 1],
+                    opacity: [0.45, 0.55, 0.45],
+                  }
+                : { scale: 1, opacity: 0.45 }
+            }
+            transition={
+              isInView
+                ? { duration: 4.2, repeat: Infinity, ease: 'easeInOut' }
+                : { duration: 0.2 }
+            }
           />
         </div>
       </motion.div>

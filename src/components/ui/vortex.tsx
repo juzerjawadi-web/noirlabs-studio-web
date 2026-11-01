@@ -22,6 +22,7 @@ export const Vortex = (props: VortexProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number | undefined>(undefined);
+  const isVisibleRef = useRef<boolean>(true);
   const particleCount = props.particleCount || 700;
   const particlePropCount = 9;
   const particlePropsLength = particleCount * particlePropCount;
@@ -97,6 +98,7 @@ export const Vortex = (props: VortexProps) => {
   };
 
   const draw = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+    if (!isVisibleRef.current) return;
     tick++;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -240,8 +242,44 @@ export const Vortex = (props: VortexProps) => {
     setup();
     window.addEventListener("resize", handleResize);
 
+    const checkAndToggle = (shouldRun: boolean) => {
+      if (shouldRun !== isVisibleRef.current) {
+        isVisibleRef.current = shouldRun;
+        if (shouldRun) {
+          const canvas = canvasRef.current;
+          const ctx = canvas?.getContext("2d");
+          if (canvas && ctx) {
+            draw(canvas, ctx);
+          }
+        } else if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+          animationFrameId.current = undefined;
+        }
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        checkAndToggle(false);
+      } else {
+        checkAndToggle(true);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    let observer: IntersectionObserver | null = null;
+    if (containerRef.current && typeof IntersectionObserver !== "undefined") {
+      observer = new IntersectionObserver(([entry]) => {
+        checkAndToggle(entry.isIntersecting && !document.hidden);
+      }, { threshold: 0.05 });
+      observer.observe(containerRef.current);
+    }
+
     return () => {
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (observer) observer.disconnect();
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
